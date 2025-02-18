@@ -1,26 +1,13 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Progress } from "@/components/ui/progress"
+import { Progress } from '@/components/ui/progress';
+import { motion } from 'framer-motion';
 
-export function UploadProgress() {
-  const [progress, setProgress] = useState(0)
+interface UploadProgressProps {
+  progress: number;
+}
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(timer)
-          return 100
-        }
-        return prevProgress + 10
-      })
-    }, 500)
-
-    return () => clearInterval(timer)
-  }, [])
-
+export function UploadProgress({ progress }: UploadProgressProps) {
   return (
     <motion.div
       className="space-y-4"
@@ -31,6 +18,5 @@ export function UploadProgress() {
       <Progress value={progress} className="w-full" />
       <p className="text-center">Fazendo upload do arquivo... {progress}%</p>
     </motion.div>
-  )
+  );
 }
-

@@ -5,29 +5,44 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { Copy, Share, Upload } from 'lucide-react';
+import { AlertTriangle, Clock, Copy, Share, Upload } from 'lucide-react';
 
 interface UploadCompleteProps {
   generatedLink: string;
   onNewUpload: () => void;
+  fileInfo: {
+    fileName: string;
+    size: number;
+    expirationDate: string | null;
+    oneTimeDownload: boolean;
+  };
 }
 
 export function UploadComplete({
   generatedLink,
-  onNewUpload
+  onNewUpload,
+  fileInfo
 }: UploadCompleteProps) {
-  const handleShare = () => {
+  const handleShare = async () => {
     if (navigator.share) {
-      navigator.share({
-        title: 'Arquivo compartilhado via AnonShare',
-        text: 'Confira este arquivo que compartilhei com você',
-        url: generatedLink
-      });
+      try {
+        await navigator.share({
+          title: 'Arquivo compartilhado via AnonShare',
+          text: 'Confira este arquivo que compartilhei com você',
+          url: generatedLink
+        });
+      } catch (error) {
+        console.error('Error sharing:', error);
+        handleCopy(); // Fallback to copying the link
+        toast({
+          title: 'Compartilhamento não suportado',
+          description: 'O link foi copiado para a área de transferência.'
+        });
+      }
     } else {
       handleCopy();
     }
   };
-
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedLink);
     toast({
@@ -50,6 +65,29 @@ export function UploadComplete({
         </p>
       </div>
 
+      <div className="space-y-4 bg-zinc-900 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold">{fileInfo.fileName}</h3>
+        <p className="text-sm text-zinc-400">
+          Tamanho: {(fileInfo.size / (1024 * 1024)).toFixed(2)} MB
+        </p>
+
+        {fileInfo.expirationDate && (
+          <div className="flex items-center text-sm text-zinc-400">
+            <Clock className="w-4 h-4 mr-2" />
+            <span>
+              Expira em: {new Date(fileInfo.expirationDate).toLocaleString()}
+            </span>
+          </div>
+        )}
+
+        {fileInfo.oneTimeDownload && (
+          <div className="flex items-center text-sm text-yellow-500">
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            <span>Este link permite apenas um download</span>
+          </div>
+        )}
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="generatedLink">Link de Compartilhamento</Label>
         <div className="flex space-x-2">
@@ -66,7 +104,7 @@ export function UploadComplete({
       </div>
 
       <div className="space-y-4">
-        <Button onClick={handleShare} className="w-full">
+        <Button onClick={() => handleShare()} className="w-full">
           <Share className="mr-2 h-4 w-4" />
           Compartilhar
         </Button>

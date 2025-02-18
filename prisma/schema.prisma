@@ -1,0 +1,64 @@
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// Modelo para arquivos carregados
+model File {
+    id              Int       @id @default(autoincrement())
+    keyFile         String    @unique // Chave para acesso ao arquivo
+    size            Int // Tamanho do arquivo
+    fileName        String // Nome do arquivo
+    mimeType        String // Tipo MIME do arquivo
+    description     String? // Descrição opcional do arquivo
+    expirationDate  DateTime? // Data para expiração do arquivo
+    oneTimeDownload Boolean   @default(false) // Se true, permite apenas um download @map("oneTimeDownload")
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+
+    // Campo para indicar se o arquivo está bloqueado ou desativado
+    isDisabled     Boolean @default(false)
+    // Campo para armazenar o motivo do bloqueio
+    disabledReason String?
+
+    // Relação com os downloads efetuados
+    downloads Download[]
+
+    // Relação com os reports
+    reports Report[]
+
+    @@map("files")
+}
+
+// Modelo para registros de download
+model Download {
+    id           Int      @id @default(autoincrement())
+    downloadedAt DateTime @default(now())
+    ip           String // IP do usuário que efetuou o download
+    userAgent    String // User-Agent do navegador ou cliente
+
+    // Relação com o arquivo
+    file   File @relation(fields: [fileId], references: [id])
+    fileId Int
+
+    @@map("downloads")
+}
+
+// Modelo para reportar arquivos
+model Report {
+    id          Int      @id @default(autoincrement())
+    reason      String // Motivo para o report
+    description String? // Descrição adicional do report
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    // Relação com o arquivo reportado
+    file   File @relation(fields: [fileId], references: [id])
+    fileId Int
+
+    @@map("reports")
+}
