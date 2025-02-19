@@ -13,7 +13,7 @@ export function FileInfo({
 	size,
 	expirationTime,
 	oneTimeDownload,
-	description,
+	description
 }: FileInfoProps) {
 	return (
 		<div className="space-y-4">

@@ -8,7 +8,7 @@ import {
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue,
+	SelectValue
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
@@ -21,7 +21,7 @@ import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
 const schema = z.object({
 	file: z
@@ -29,14 +29,14 @@ const schema = z.object({
 		.refine((file) => file, 'Arquivo é obrigatório')
 		.refine(
 			(file) => file && file.size <= MAX_FILE_SIZE,
-			'O tamanho do arquivo deve ser menor que 100MB.',
+			'O tamanho do arquivo deve ser menor que 100MB.'
 		),
 	expirationTime: z
 		.string()
 		.min(1, 'Por favor, selecione um tempo de expiração')
 		.optional(),
 	oneTimeDownload: z.boolean().default(false).optional(),
-	description: z.string().optional(),
+	description: z.string().optional()
 });
 
 interface FileUploadFormProps {
@@ -49,7 +49,7 @@ const expirationOptions = [
 	{ value: '24', label: '24 Horas' },
 	{ value: '72', label: '3 Dias' },
 	{ value: '168', label: '7 Dias' },
-	{ value: '720', label: '30 Dias' },
+	{ value: '720', label: '30 Dias' }
 ] as const;
 
 export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
@@ -61,13 +61,13 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 		handleSubmit,
 		setValue,
 		watch,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<z.infer<typeof schema>>({
 		resolver: zodResolver(schema),
 		defaultValues: {
 			oneTimeDownload: false,
-			expirationTime: 'never',
-		},
+			expirationTime: 'never'
+		}
 	});
 
 	const watchFile = watch('file');
@@ -79,7 +79,7 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 			setFileSizeError(null);
 		} else {
 			setFileSizeError(
-				'O arquivo selecionado é muito grande. O tamanho máximo permitido é 100MB.',
+				'O arquivo selecionado é muito grande. O tamanho máximo permitido é 100MB.'
 			);
 		}
 	};
@@ -87,7 +87,7 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		multiple: false,
-		maxSize: MAX_FILE_SIZE,
+		maxSize: MAX_FILE_SIZE
 	});
 
 	return (
@@ -158,7 +158,7 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 							exit="collapsed"
 							variants={{
 								open: { opacity: 1, height: 'auto' },
-								collapsed: { opacity: 0, height: 0 },
+								collapsed: { opacity: 0, height: 0 }
 							}}
 							transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
 						>

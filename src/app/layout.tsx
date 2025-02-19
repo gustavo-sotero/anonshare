@@ -9,11 +9,11 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'AnonShare - Compartilhamento Anônimo de Arquivos',
-	description: 'Faça upload e compartilhe arquivos anonimamente com segurança',
+	description: 'Faça upload e compartilhe arquivos anonimamente com segurança'
 };
 
 export default function RootLayout({
-	children,
+	children
 }: {
 	children: React.ReactNode;
 }) {

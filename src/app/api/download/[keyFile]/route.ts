@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
 	request: Request,
-	{ params }: { params: Promise<{ keyFile: string }> },
+	{ params }: { params: Promise<{ keyFile: string }> }
 ) {
 	const { keyFile } = await params;
 
@@ -15,16 +15,16 @@ export async function GET(
 	if (!fileRecord)
 		return NextResponse.json(
 			{ error: 'Arquivo não encontrado' },
-			{ status: 404 },
+			{ status: 404 }
 		);
 	if (fileRecord.isDisabled)
 		return NextResponse.json(
 			{
 				error:
 					fileRecord.disabledReason ||
-					'O download desse arquivo foi desabilitado.',
+					'O download desse arquivo foi desabilitado.'
 			},
-			{ status: 403 },
+			{ status: 403 }
 		);
 
 	if (
@@ -35,25 +35,25 @@ export async function GET(
 	}
 	if (fileRecord.oneTimeDownload) {
 		const downloadCount = await prisma.download.count({
-			where: { fileId: fileRecord.id },
+			where: { fileId: fileRecord.id }
 		});
 		if (downloadCount > 0)
 			return NextResponse.json(
 				{ error: 'Arquivo só pode ser baixado uma vez' },
-				{ status: 403 },
+				{ status: 403 }
 			);
 	}
 
 	// Setup command with bucket and key
 	const command = new GetObjectCommand({
 		Bucket: process.env.R2_BUCKET,
-		Key: fileRecord.keyFile,
+		Key: fileRecord.keyFile
 	});
 
 	try {
 		// Generate a presigned URL for the client to download directly
 		const signedUrl = await getSignedUrl(s3Client, command, {
-			expiresIn: 3600,
+			expiresIn: 3600
 		});
 
 		// Log the download asynchronously, without blocking response
@@ -61,20 +61,20 @@ export async function GET(
 		const userAgent = request.headers.get('user-agent') || '';
 
 		await prisma.download.create({
-			data: { fileId: fileRecord.id, ip, userAgent },
+			data: { fileId: fileRecord.id, ip, userAgent }
 		});
 
 		return new NextResponse(JSON.stringify({ url: signedUrl }), {
 			status: 200,
 			headers: {
-				'Content-Type': 'application/json',
-			},
+				'Content-Type': 'application/json'
+			}
 		});
 	} catch (err) {
 		console.log(err);
 		return NextResponse.json(
 			{ error: 'Arquivo não encontrado' },
-			{ status: 404 },
+			{ status: 404 }
 		);
 	}
 }

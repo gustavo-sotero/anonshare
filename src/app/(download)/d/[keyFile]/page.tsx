@@ -41,7 +41,7 @@ export default function DownloadPage() {
 				const errorMessage = err instanceof Error ? err.message : String(err);
 				setError(
 					errorMessage ||
-						'Erro ao carregar informações do arquivo. Por favor, tente novamente mais tarde.',
+						'Erro ao carregar informações do arquivo. Por favor, tente novamente mais tarde.'
 				);
 			}
 		};

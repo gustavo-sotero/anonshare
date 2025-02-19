@@ -14,7 +14,7 @@ interface DownloadButtonProps {
 export function DownloadButton({
 	fileId,
 	fileName,
-	oneTimeDownload,
+	oneTimeDownload
 }: DownloadButtonProps) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
@@ -48,7 +48,7 @@ export function DownloadButton({
 			const errorMessage = err instanceof Error ? err.message : String(err);
 			setError(
 				errorMessage ||
-					'Erro ao baixar o arquivo. Por favor, tente novamente mais tarde.',
+					'Erro ao baixar o arquivo. Por favor, tente novamente mais tarde.'
 			);
 		} finally {
 			setLoading(false);

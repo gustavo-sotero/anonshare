@@ -7,7 +7,7 @@ const initialState: UploadState = {
 	state: 'initial',
 	progress: 0,
 	generatedLink: '',
-	fileInfo: null,
+	fileInfo: null
 };
 
 export function useFileUpload() {
@@ -19,7 +19,7 @@ export function useFileUpload() {
 			expirationTime === 'never'
 				? null
 				: new Date(
-						Date.now() + Number(expirationTime) * 60 * 60 * 1000,
+						Date.now() + Number(expirationTime) * 60 * 60 * 1000
 					).toISOString();
 
 		setUploadState((prev) => ({ ...prev, state: 'uploading', progress: 0 }));
@@ -53,7 +53,7 @@ export function useFileUpload() {
 				expirationDate,
 				oneTimeDownload: oneTimeDownload || false,
 				mimeType: file.type,
-				size: file.size,
+				size: file.size
 			});
 
 			const fileInfo: FileInfo = {
@@ -61,14 +61,14 @@ export function useFileUpload() {
 				size: file.size,
 				description: description || null,
 				expirationDate,
-				oneTimeDownload: oneTimeDownload || false,
+				oneTimeDownload: oneTimeDownload || false
 			};
 
 			setUploadState({
 				state: 'complete',
 				progress: 100,
 				generatedLink: link,
-				fileInfo,
+				fileInfo
 			});
 
 			return presignData.keyFile;
@@ -86,6 +86,6 @@ export function useFileUpload() {
 	return {
 		...uploadState,
 		handleUpload,
-		reset,
+		reset
 	};
 }

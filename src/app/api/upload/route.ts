@@ -16,19 +16,19 @@ export async function POST(request: Request) {
 				oneTimeDownload: data.oneTimeDownload || false,
 				fileName: data.fileName,
 				mimeType: data.mimeType,
-				size: data.size,
-			},
+				size: data.size
+			}
 		});
 
 		return NextResponse.json(
 			{ link: `${process.env.BASE_URL}/d/${file.keyFile}` },
-			{ status: 201 },
+			{ status: 201 }
 		);
 	} catch (error) {
 		console.error('Erro ao processar upload:', error);
 		return NextResponse.json(
 			{ error: 'Erro interno no servidor.' },
-			{ status: 500 },
+			{ status: 500 }
 		);
 	}
 }

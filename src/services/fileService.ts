@@ -13,12 +13,12 @@ export async function getFileInfo(keyFile: string): Promise<FileInfo> {
 
 export async function getPresignedUrl(
 	keyFile: string,
-	contentType: string,
+	contentType: string
 ): Promise<PresignedData> {
 	const response = await fetch('/api/upload/presign', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ keyFile, contentType }),
+		body: JSON.stringify({ keyFile, contentType })
 	});
 	if (!response.ok) throw new Error('Failed to get presigned data');
 	return response.json();
@@ -26,7 +26,7 @@ export async function getPresignedUrl(
 
 export async function uploadFile(
 	file: File,
-	presignedUrl: string,
+	presignedUrl: string
 ): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -51,7 +51,7 @@ export async function notifyUploadComplete(data: {
 	const response = await fetch('/api/upload', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(data),
+		body: JSON.stringify(data)
 	});
 	if (!response.ok) throw new Error('Failed to notify upload');
 	return response.json();
@@ -73,18 +73,18 @@ export function generateDownloadLink(keyFile: string): string {
 export async function reportFile(
 	fileKey: string,
 	reason: string,
-	description?: string,
+	description?: string
 ) {
 	const response = await fetch('/api/report', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
 			fileKey,
 			reason,
-			description,
-		}),
+			description
+		})
 	});
 
 	if (!response.ok) {

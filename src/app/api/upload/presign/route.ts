@@ -10,18 +10,18 @@ export async function POST(request: Request) {
 		if (!keyFile || !contentType) {
 			return NextResponse.json(
 				{ error: 'Os campos "fileId" e "contentType" são obrigatórios.' },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
 		const command = new PutObjectCommand({
 			Bucket: process.env.R2_BUCKET,
 			Key: keyFile,
-			ContentType: contentType,
+			ContentType: contentType
 		});
 
 		const presignedUrl = await getSignedUrl(s3Client, command, {
-			expiresIn: 3600,
+			expiresIn: 3600
 		});
 
 		return NextResponse.json({ presignedUrl, keyFile }, { status: 200 });
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 		console.error('Erro ao gerar URL pré-assinada:', error);
 		return NextResponse.json(
 			{ error: 'Erro interno no servidor.' },
-			{ status: 500 },
+			{ status: 500 }
 		);
 	}
 }

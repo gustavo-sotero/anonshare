@@ -17,7 +17,7 @@ interface UploadCompleteProps {
 export function UploadComplete({
 	generatedLink,
 	onNewUpload,
-	fileInfo,
+	fileInfo
 }: UploadCompleteProps) {
 	const handleShare = async () => {
 		if (navigator.share) {
@@ -25,14 +25,14 @@ export function UploadComplete({
 				await navigator.share({
 					title: 'Arquivo compartilhado via AnonShare',
 					text: 'Confira este arquivo que compartilhei com você',
-					url: generatedLink,
+					url: generatedLink
 				});
 			} catch (error) {
 				console.error('Error sharing:', error);
 				handleCopy();
 				toast({
 					title: 'Compartilhamento não suportado',
-					description: 'O link foi copiado para a área de transferência.',
+					description: 'O link foi copiado para a área de transferência.'
 				});
 			}
 		} else {
@@ -44,7 +44,7 @@ export function UploadComplete({
 		navigator.clipboard.writeText(generatedLink);
 		toast({
 			title: 'Link copiado!',
-			description: 'O link foi copiado para a área de transferência.',
+			description: 'O link foi copiado para a área de transferência.'
 		});
 	};
 

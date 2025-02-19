@@ -9,7 +9,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
+	DialogTrigger
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -50,7 +50,7 @@ export function ReportDialog({ fileKey }: ReportDialogProps) {
 
 			toast({
 				title: 'Relatório enviado',
-				description: 'Obrigado por nos ajudar a manter a plataforma segura.',
+				description: 'Obrigado por nos ajudar a manter a plataforma segura.'
 			});
 
 			setIsOpen(false);

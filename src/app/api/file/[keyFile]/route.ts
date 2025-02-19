@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
 	request: Request,
-	{ params }: { params: Promise<{ keyFile: string }> },
+	{ params }: { params: Promise<{ keyFile: string }> }
 ) {
 	const { keyFile } = await params;
 
@@ -19,8 +19,8 @@ export async function GET(
 			isDisabled: true,
 			disabledReason: true,
 			expirationDate: true,
-			oneTimeDownload: true,
-		},
+			oneTimeDownload: true
+		}
 	});
 
 	if (!fileRecord) {
@@ -28,7 +28,7 @@ export async function GET(
 	}
 
 	const downloadCount = await prisma.download.count({
-		where: { fileId: fileRecord.id },
+		where: { fileId: fileRecord.id }
 	});
 
 	return NextResponse.json({
@@ -41,6 +41,6 @@ export async function GET(
 		disabledReason: fileRecord.disabledReason,
 		expirationDate: fileRecord.expirationDate,
 		oneTimeDownload: fileRecord.oneTimeDownload,
-		isOnceDownloaded: downloadCount > 0,
+		isOnceDownloaded: downloadCount > 0
 	});
 }
