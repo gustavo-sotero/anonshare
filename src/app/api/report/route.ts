@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 		return NextResponse.json(report);
 	} catch (error) {
 		if (error instanceof z.ZodError) {
-			return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 });
+			return NextResponse.json({ message: 'Dados inválidos' }, { status: 400 });
 		}
 
 		console.error('Erro ao criar relatório:', error);
