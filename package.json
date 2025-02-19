@@ -39,6 +39,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
