@@ -118,10 +118,10 @@ export default function PoliticasDePrivacidade() {
 							Se você tiver alguma dúvida sobre esta Política de Privacidade,
 							entre em contato conosco em:{' '}
 							<a
-								href="mailto:privacidade@anonshare.com"
+								href="mailto:contato@anonshare.dev"
 								className="text-blue-400 hover:underline"
 							>
-								privacidade@anonshare.com
+								contato@anonshare.dev
 							</a>
 						</p>
 					</section>

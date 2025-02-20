@@ -89,10 +89,10 @@ export default function TermosDeUso() {
 							Se você tiver alguma dúvida sobre estes Termos de Uso, entre em
 							contato conosco em:{' '}
 							<a
-								href="mailto:contato@anonshare.com"
+								href="mailto:contato@anonshare.dev"
 								className="text-blue-400 hover:underline"
 							>
-								contato@anonshare.com
+								contato@anonshare.dev
 							</a>
 						</p>
 					</section>
