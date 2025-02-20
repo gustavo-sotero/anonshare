@@ -88,7 +88,7 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 			setFileSizeError(null);
 		} else {
 			setFileSizeError(
-				'O arquivo selecionado é muito grande. O tamanho máximo permitido é 100MB.'
+				`O arquivo selecionado é muito grande. O tamanho máximo permitido é ${MB_MAX_FILE_SIZE}MB.`
 			);
 		}
 	};

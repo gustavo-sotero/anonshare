@@ -63,14 +63,18 @@ export function UploadComplete({
 			</div>
 
 			<div className="space-y-4 bg-zinc-900 p-4 rounded-lg">
-				<h3 className="text-l font-semibold">{fileInfo.fileName}</h3>
+				<h3 className="text-l font-semibold break-words whitespace-pre-wrap">
+					{fileInfo.fileName}
+				</h3>
 				<p className="text-sm text-zinc-400">
 					Tamanho: {(fileInfo.size / (1024 * 1024)).toFixed(2)} MB
 				</p>
 
 				{fileInfo.description && (
 					<div className="text-base text-zinc-400">
-						<p>{fileInfo.description}</p>
+						<p className="break-words whitespace-pre-wrap">
+							Descrição: {fileInfo.description}
+						</p>
 					</div>
 				)}
 
