@@ -21,8 +21,8 @@ import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-const MB_MAX_FILE_SIZE = process.env.MB_MAX_FILE_SIZE
-	? Number.parseInt(process.env.MB_MAX_FILE_SIZE)
+const MB_MAX_FILE_SIZE = process.env.NEXT_PUBLIC_MB_MAX_FILE_SIZE
+	? Number(process.env.NEXT_PUBLIC_MB_MAX_FILE_SIZE)
 	: 50; // 50MB
 const MAX_FILE_SIZE = MB_MAX_FILE_SIZE * 1024 * 1024; // 50MB
 
