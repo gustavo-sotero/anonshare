@@ -21,7 +21,10 @@ import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const MB_MAX_FILE_SIZE = process.env.MB_MAX_FILE_SIZE
+	? parseInt(process.env.MB_MAX_FILE_SIZE)
+	: 50; // 50MB
+const MAX_FILE_SIZE = MB_MAX_FILE_SIZE * 1024 * 1024; // 50MB
 
 const schema = z.object({
 	file: z
@@ -29,7 +32,7 @@ const schema = z.object({
 		.refine((file) => file, 'Arquivo é obrigatório')
 		.refine(
 			(file) => file && file.size <= MAX_FILE_SIZE,
-			'O tamanho do arquivo deve ser menor que 100MB.'
+			`O tamanho do arquivo deve ser menor que ${MB_MAX_FILE_SIZE}MB.`
 		),
 	expirationTime: z
 		.string()
@@ -116,7 +119,7 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 						)}
 					</div>
 					<p className="text-xs text-gray-500">
-						Tamanho máximo do arquivo: 100MB
+						Tamanho máximo do arquivo: {MB_MAX_FILE_SIZE}MB
 					</p>
 				</div>
 			</div>

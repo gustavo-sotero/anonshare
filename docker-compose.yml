@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  anonshare:
+    env_file:
+      - .env
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      BASE_URL: ${BASE_URL}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+      CLOUDFLARE_R2_ENDPOINT: ${CLOUDFLARE_R2_ENDPOINT}
+      R2_BUCKET: ${R2_BUCKET}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      BOT_TOKEN: ${BOT_TOKEN}
+      REPORT_CHAT_ID: ${REPORT_CHAT_ID}
+    # removed unnecessary services
+
+# Removed any additional services

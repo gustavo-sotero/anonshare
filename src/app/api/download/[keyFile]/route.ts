@@ -31,7 +31,7 @@ export async function GET(
 		fileRecord.expirationDate &&
 		new Date(fileRecord.expirationDate) < new Date()
 	) {
-		return NextResponse.json({ error: 'Arquivo expirado.' }, { status: 410 });
+		return NextResponse.json({ message: 'Arquivo expirado.' }, { status: 410 });
 	}
 	if (fileRecord.oneTimeDownload) {
 		const downloadCount = await prisma.download.count({

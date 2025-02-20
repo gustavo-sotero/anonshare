@@ -24,7 +24,7 @@ export async function GET(
 	});
 
 	if (!fileRecord) {
-		return NextResponse.json({ error: 'File not found' }, { status: 404 });
+		return NextResponse.json({ message: 'File not found' }, { status: 404 });
 	}
 
 	const downloadCount = await prisma.download.count({
