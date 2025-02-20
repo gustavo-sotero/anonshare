@@ -39,7 +39,10 @@ const schema = z.object({
 		.min(1, 'Por favor, selecione um tempo de expiração')
 		.optional(),
 	oneTimeDownload: z.boolean().default(false).optional(),
-	description: z.string().optional()
+	description: z
+		.string()
+		.max(500, 'A descrição deve ter no máximo 500 caracteres')
+		.optional()
 });
 
 interface FileUploadFormProps {
@@ -72,6 +75,9 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 			expirationTime: 'never'
 		}
 	});
+
+	const descriptionWatch = watch('description');
+	const descriptionLength = descriptionWatch ? descriptionWatch.length : 0;
 
 	const watchFile = watch('file');
 
@@ -213,9 +219,13 @@ export function FileUploadForm({ onSubmit }: FileUploadFormProps) {
 				<Label htmlFor="description">Descrição (Opcional)</Label>
 				<Textarea
 					{...register('description')}
-					placeholder="Adicione uma descrição para este arquivo..."
+					placeholder="Adicione uma descrição para este arquivo... (máx. 500 caracteres)"
 					className="bg-zinc-900 border-zinc-800 min-h-[100px] resize-none"
+					maxLength={500}
 				/>
+				<p className="text-sm text-gray-400 text-right">
+					{descriptionLength}/500 caracteres
+				</p>
 			</div>
 
 			<Button

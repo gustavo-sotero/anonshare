@@ -42,6 +42,11 @@ export function ReportDialog({ fileKey }: ReportDialogProps) {
 			return;
 		}
 
+		if (reportDescription.length > 500) {
+			setError('A descrição deve ter no máximo 500 caracteres.');
+			return;
+		}
+
 		setIsLoading(true);
 		setError(null);
 
@@ -132,18 +137,23 @@ export function ReportDialog({ fileKey }: ReportDialogProps) {
 							id="description"
 							value={reportDescription}
 							onChange={(e) => {
-								setReportDescription(e.target.value);
+								setReportDescription(e.target.value.slice(0, 500));
 								if (reportReason === 'other' && e.target.value.trim()) {
 									setError(null);
 								}
 							}}
 							placeholder={
 								reportReason === 'other'
-									? 'Por favor, forneça detalhes sobre o problema...'
-									: 'Forneça detalhes adicionais sobre o problema (opcional)...'
+									? 'Por favor, forneça detalhes sobre o problema... (máx. 500 caracteres)'
+									: 'Forneça detalhes adicionais sobre o problema (opcional, máx. 500 caracteres)...'
 							}
 							className="bg-zinc-900 border-zinc-800"
+							maxLength={500}
 						/>
+						{/* Add a character count display */}
+						<p className="text-sm text-gray-400 text-right">
+							{reportDescription.length}/500 caracteres
+						</p>
 					</div>
 				</div>
 				<DialogFooter>
