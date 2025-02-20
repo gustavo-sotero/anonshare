@@ -27,7 +27,8 @@
 			"quoteStyle": "single",
 			"semicolons": "always",
 			"arrowParentheses": "always",
-			"trailingCommas": "none"
+			"trailingCommas": "none",
+			"lineEnding": "lf"
 		}
 	}
 }

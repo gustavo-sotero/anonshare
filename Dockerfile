@@ -15,9 +15,9 @@ WORKDIR /app
 COPY package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/prisma ./prisma
-RUN npm ci --omit=dev
-COPY entrypoint.sh ./entrypoint.sh
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
+RUN npm ci --omit=dev
 EXPOSE 3000
 
 ENTRYPOINT ["./entrypoint.sh"]
