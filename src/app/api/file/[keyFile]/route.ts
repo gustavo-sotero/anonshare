@@ -41,6 +41,6 @@ export async function GET(
 		disabledReason: fileRecord.disabledReason,
 		expirationDate: fileRecord.expirationDate,
 		oneTimeDownload: fileRecord.oneTimeDownload,
-		isOnceDownloaded: downloadCount > 0
+		isOnceDownloaded: fileRecord.oneTimeDownload && downloadCount > 0
 	});
 }

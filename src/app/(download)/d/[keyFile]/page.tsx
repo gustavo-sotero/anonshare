@@ -3,7 +3,9 @@
 import { DownloadButton } from '@/components/DownloadButton';
 import { FileInfo as FileInfoComponent } from '@/components/FileInfo';
 import { ReportDialog } from '@/components/ReportDialog';
+import { ViewMediaButton } from '@/components/ViewMediaButton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { isMediaFile } from '@/lib/utils';
 import { getFileInfo } from '@/services/fileService';
 import type { FileInfo } from '@/types/file';
 import { motion } from 'framer-motion';
@@ -123,6 +125,12 @@ export default function DownloadPage() {
 		);
 	}
 
+	// Verificar se é um arquivo de mídia elegível para visualização
+	const isViewableMedia =
+		isMediaFile(fileInfo.fileName) &&
+		!fileInfo.expirationDate &&
+		!fileInfo.oneTimeDownload;
+
 	return (
 		<div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
 			<motion.div
@@ -149,6 +157,16 @@ export default function DownloadPage() {
 						fileName={fileInfo.fileName}
 						oneTimeDownload={fileInfo.oneTimeDownload}
 					/>
+
+					{isViewableMedia && (
+						<div className="mt-2">
+							<ViewMediaButton
+								fileId={params.keyFile as string}
+								fileName={fileInfo.fileName}
+							/>
+						</div>
+					)}
+
 					<ReportDialog fileKey={params.keyFile as string} />
 				</div>
 
