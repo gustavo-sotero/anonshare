@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { downloadFile } from '@/services/fileService';
 import { Eye, Loader2 } from 'lucide-react';
-import Image from 'next/image';
 import { useState } from 'react';
 
 interface ViewMediaButtonProps {
@@ -42,6 +41,7 @@ export function ViewMediaButton({ fileId, fileName }: ViewMediaButtonProps) {
 	};
 
 	const isVideo = fileName.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/i);
+	const isImage = fileName.match(/\.(jpg|jpeg|png|gif|webp|svg|avif)$/i);
 
 	return (
 		<>
@@ -78,17 +78,16 @@ export function ViewMediaButton({ fileId, fileName }: ViewMediaButtonProps) {
 								<track kind="captions" label="Português" default />
 								Seu navegador não suporta a exibição deste vídeo.
 							</video>
-						) : mediaUrl ? (
-							<div className="relative max-w-full max-h-[70vh] h-[50vh] w-full">
-								<Image
+						) : mediaUrl && isImage ? (
+							<div className="max-w-full max-h-[70vh] flex items-center justify-center">
+								<img
 									src={mediaUrl}
 									alt={fileName}
-									className="object-contain"
-									fill
-									sizes="(max-width: 768px) 100vw, 80vw"
-									priority
+									className="object-contain max-w-full max-h-[70vh]"
 								/>
 							</div>
+						) : mediaUrl ? (
+							<p>Este tipo de arquivo não pode ser visualizado diretamente.</p>
 						) : (
 							<p>Carregando mídia...</p>
 						)}
