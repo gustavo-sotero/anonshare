@@ -1,3 +1,5 @@
+'use client';
+
 import { generateDownloadLink, getFileInfo } from '@/services/fileService';
 import type { FileInfo } from '@/types/file';
 import { AnimatePresence, motion } from 'framer-motion';
