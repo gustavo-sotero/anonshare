@@ -75,6 +75,9 @@ Para configurar o projeto corretamente, você precisará definir as seguintes va
 
 ```env
 DATABASE_URL="seu-banco-de-dados"
+# Defina o tamanho máximo do arquivo em MB
+NEXT_PUBLIC_MB_MAX_FILE_SIZE="tamanho-maximo" # visível pelo front-end
+MB_MAX_FILE_SIZE="tamanho-maximo"             # validação no servidor
 BOT_TOKEN="token-do-bot-telegram"
 REPORT_CHAT_ID="chat-id-telegram"
 BASE_URL="url-base-da-aplicacao"
